@@ -118,6 +118,28 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+if vim.env.SSH_TTY or vim.env.ZELLIJ or vim.env.TMUX then
+  -- Define the global clipboard variable explicitly.
+  -- This overrides the provider checkhealth logic.
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      -- Map the '+' register (system clipboard) to OSC 52
+      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+      -- Map the '*' register (primary selection) to OSC 52
+      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+    },
+    paste = {
+      -- Pasting FROM the local system TO the remote server via OSC 52.
+      -- NOTE: This often fails if the terminal (Foot) denies read access.
+      -- If 'p' hangs or does nothing, it is because Foot is blocking the read.
+      ['+'] = require('vim.ui.clipboard.osc52').paste '+',
+      ['*'] = require('vim.ui.clipboard.osc52').paste '*',
+    },
+  }
+end
+
+vim.o.wrap = false
 -- Enable break indent
 vim.o.breakindent = true
 
