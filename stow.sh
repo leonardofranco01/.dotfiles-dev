@@ -19,7 +19,7 @@ done
 
 if [ "$SHOW_HELP" -eq 1 ]; then
     cat <<EOF
-Uso: ./install.sh [opções]
+Uso: ./stow.sh [opções]
 
 Opções:
   -N, --no-backup     Desativa criação de backups; arquivos conflitantes são removidos.
@@ -37,8 +37,7 @@ DOTFILES="$HOME/dotfiles"
 cd "$DOTFILES" || exit
 
 # Lista de módulos a instalar
-STOW_FOLDERS="bash dgop dms dsearch fish foot git hyprland nvim pavucontrol qalculate ssh starship viewnior zellij"
-
+STOW_FOLDERS="bash fish git nvim ssh yazi zellij"
 
 if [ "$ENABLE_BACKUPS" -eq 1 ]; then
     # Configuração de backup (fora de .config)
