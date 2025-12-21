@@ -1,0 +1,59 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: leo
+      POSTGRES_PASSWORD: Poelocnarf1478!
+    volumes:
+      - ./pg_data:/var/lib/postgresql
+      - ./pg_init:/docker-entrypoint-initdb.d
+
+  memos:
+    image: neosmemo/memos:stable
+    container_name: memos
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5230:5230"
+    environment:
+      MEMOS_DRIVER: postgres
+      MEMOS_DSN: postgresql://leo:Poelocnarf1478!@db:5432/memos?sslmode=disable
+    volumes:
+      - ./memos_data:/var/opt/memos
+
+  vikunja:
+    image: vikunja/vikunja
+    container_name: vikunja
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3456:3456"
+    environment:
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_HOST: db
+      VIKUNJA_DATABASE_USER: leo
+      VIKUNJA_DATABASE_PASSWORD: Poelocnarf1478!
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_SERVICE_PUBLICURL: https://vikunja.lfsdev.com.br/
+    volumes:
+      - ./vikunja_files:/app/vikunja/files
+      - ./vikunja_files/config.yml:/etc/vikunja/config.yml
+
+  adguard:
+    image: adguard/adguardhome
+    container_name: adguard
+    restart: always
+    network_mode: host
+    volumes:
+      - ./adguard/work:/opt/adguard/work
+      - ./adguard/conf:/opt/adguard/conf
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare_tunnel
+    restart: always
+    command: tunnel --no-autoupdate run --token eyJhIjoiNzk1MTEwYTYyYzc0ZTljZmVhOGFhZDc0N2RmZDVjYTQiLCJ0IjoiNTQ1ZDg4ZDctMzY0Ni00YmE3LWFiMmUtZWQzMjU0NTgyMDMyIiwicyI6Ik1XWTBaR1EwWXpBdFptSTVNUzAwT1dRNExUbG1PR0l0Tm1JMVlXRmhaVFZsTlRBNCJ9

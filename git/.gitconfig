@@ -1,0 +1,15 @@
+[init]
+	defaultBranch = main
+[user]
+	name = Leonardo Franco
+	email = leonardofrancosilva01@gmail.com
+[core]
+	editor = nvim
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = true
+[merge]
+	conflictStyle = zdiff3

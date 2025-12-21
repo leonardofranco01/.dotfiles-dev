@@ -1,0 +1,8 @@
+\.git
+\.gitignore
+\.gitmodules
+\.stow-local-ignore
+.*\.sh
+README\.md
+LICENSE
+.*-pkglist\.txt

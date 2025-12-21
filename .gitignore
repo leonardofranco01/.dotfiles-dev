@@ -1,0 +1,8 @@
+dms/.config/DankMaterialShell/plugins/*
+hyprland/.config/hypr/current.conf
+.stignore
+.stfolder/syncthing-folder-82d80b.txt
+.stversions/
+ssh/.ssh/**
+!ssh/.ssh/config
+zellij/.config/zellij/plugins/*
