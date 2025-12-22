@@ -36,11 +36,11 @@ echo "[+] Backups: $([ "$ENABLE_BACKUPS" -eq 1 ] && echo 'ATIVADOS' || echo 'DES
 echo -e "[+] Instalando dependências base\n"
 sudo pacman -Syu --noconfirm base base-devel git stow
 
-if ! command -v yay &>/dev/null; then
-  echo -e "[+] Instalando yay..."
+if ! command -v paru &>/dev/null; then
+  echo -e "[+] Instalando paru..."
   cd /tmp || exit
-  git clone https://aur.archlinux.org/yay.git
-  cd yay || exit
+  git clone https://aur.archlinux.org/paru.git
+  cd paru || exit
   makepkg -si --noconfirm
   cd - || exit
 fi
@@ -48,7 +48,7 @@ fi
 # 3. Instalação de Pacotes
 echo -e "[+] Instalando pacotes essenciais...\n"
 
-yay -S --needed --noconfirm bat blueman bluez bluez-utils brightnessctl btop docker docker-compose efibootmgr eza fastfetch fd fish fzf git github-cli gst-plugin-pipewire htop intel-ucode inxi less libpulse linux linux-firmware linux-headers man-db neovim networkmanager npm openssh pipewire pipewire-alsa pipewire-jack pipewire-pulse postgresql power-profiles-daemon ripgrep ripgrep-all speedtest-cli stow tailscale unrar unzip vim wget wireplumber yazi zellij zoxide zram-generator
+paru -S --needed --noconfirm bat blueman bluez bluez-utils brightnessctl btop docker docker-compose efibootmgr eza fastfetch fd fish fzf git github-cli gst-plugin-pipewire htop intel-ucode inxi less libpulse linux linux-firmware linux-headers man-db neovim networkmanager npm openssh pipewire pipewire-alsa pipewire-jack pipewire-pulse postgresql power-profiles-daemon ripgrep ripgrep-all speedtest-cli stow tailscale unrar unzip vim wget wireplumber yazi zellij zoxide zram-generator
 
 # Diretório dos dotfiles
 DOTFILES="$HOME/dotfiles"
